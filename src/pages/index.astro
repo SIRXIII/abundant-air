@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import TrustBar from '../components/TrustBar.astro';
+import Services from '../components/Services.astro';
+import Work from '../components/Work.astro';
+import WhyCarlos from '../components/WhyCarlos.astro';
+import Testimonials from '../components/Testimonials.astro';
+import AreaServed from '../components/AreaServed.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import CTABanner from '../components/CTABanner.astro';
+import { config } from '../data/site.config';
+---
+<BaseLayout title={config.seo.siteName} description={config.seo.defaultDescription} path="/">
+  <Hero />
+  <TrustBar />
+  <Services />
+  <Work />
+  <WhyCarlos />
+  <Testimonials />
+  <AreaServed />
+  <QuoteForm />
+  <CTABanner />
+</BaseLayout>

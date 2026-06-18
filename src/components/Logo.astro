@@ -1,0 +1,15 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/images/logo.png';
+import { config } from '../data/site.config';
+interface Props { class?: string; width?: number; }
+const { class: className = 'h-12 w-auto', width = 220 } = Astro.props;
+---
+<Image
+  src={logo}
+  alt={config.brand.logoAlt}
+  width={width}
+  densities={[1.5, 2]}
+  loading="eager"
+  class={className}
+/>

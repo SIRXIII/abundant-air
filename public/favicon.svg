@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="14" fill="#16302b"/>
+  <g fill="none" stroke="#5fb89a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <!-- three oasis trees -->
+    <path d="M32 14v14"/>
+    <path d="M32 16c-3-2-6-1-7 1m7-1c3-2 6-1 7 1m-7 2c-2.4-1.6-5-1-6 .6m6-.6c2.4-1.6 5-1 6 .6"/>
+    <path d="M22 22v9"/>
+    <path d="M22 23c-2.2-1.4-4.4-.7-5.2.9m5.2-.9c2.2-1.4 4.4-.7 5.2.9"/>
+    <path d="M42 22v9"/>
+    <path d="M42 23c-2.2-1.4-4.4-.7-5.2.9m5.2-.9c2.2-1.4 4.4-.7 5.2.9"/>
+  </g>
+  <!-- dune -->
+  <path d="M12 33c8-5 14-5 20 0s12 5 20 0" fill="none" stroke="#5fb89a" stroke-width="2.4" stroke-linecap="round"/>
+  <!-- air waves -->
+  <path d="M14 41c5-4 9-4 13 0s9 4 14 0 7-2 9-1" fill="none" stroke="#d9724e" stroke-width="3" stroke-linecap="round"/>
+  <path d="M16 49c5-4 9-4 13 0s9 4 14 0 6-2 8-1" fill="none" stroke="#e8a86b" stroke-width="2.6" stroke-linecap="round" opacity="0.9"/>
+</svg>

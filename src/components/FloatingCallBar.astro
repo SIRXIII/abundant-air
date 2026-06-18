@@ -1,0 +1,23 @@
+---
+// Mobile-only floating call + text bar. Always one tap from a conversion.
+import { config } from '../data/site.config';
+import Icon from './Icon.astro';
+---
+<div class="fixed inset-x-0 bottom-0 z-50 border-t border-sandline bg-paper/95 backdrop-blur-md md:hidden">
+  <div class="grid grid-cols-2 gap-2 px-3 py-2.5" style="padding-bottom:calc(0.625rem + env(safe-area-inset-bottom))">
+    <a
+      href={`tel:${config.phone}`}
+      class="inline-flex items-center justify-center gap-2 rounded-full bg-coral px-4 py-3 text-sm font-semibold text-white shadow-soft active:bg-coral-deep"
+      data-call
+    >
+      <Icon name="phone" class="h-4 w-4" /> Call now
+    </a>
+    <a
+      href={`sms:${config.phoneSms}`}
+      class="inline-flex items-center justify-center gap-2 rounded-full border border-sage-deep bg-sage-tint px-4 py-3 text-sm font-semibold text-sage-deep active:bg-sage active:text-white"
+    >
+      <Icon name="sms" class="h-4 w-4" /> Text us
+    </a>
+  </div>
+</div>
+<div class="h-16 md:hidden" aria-hidden="true"></div>

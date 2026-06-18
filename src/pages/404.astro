@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { config } from '../data/site.config';
+---
+<BaseLayout title="Page not found" description="That page moved or no longer exists." path="/404">
+  <section class="mx-auto flex max-w-2xl flex-col items-center px-4 py-24 text-center sm:px-6">
+    <p class="font-display text-6xl text-coral">404</p>
+    <h1 class="mt-3 text-3xl text-ink">That page drifted off like desert air</h1>
+    <p class="mt-4 text-lg text-ink-soft">Let's get you back to cool comfort.</p>
+    <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+      <a href="/" class="inline-flex items-center justify-center gap-2 rounded-full bg-coral px-6 py-3.5 font-semibold text-white shadow-lift hover:bg-coral-deep">Back to home</a>
+      <a href={`tel:${config.phone}`} data-call class="inline-flex items-center justify-center gap-2 rounded-full border border-ink/15 bg-cream px-6 py-3.5 font-semibold text-ink hover:border-ink/30"><Icon name="phone" class="h-5 w-5" /> Call {config.phoneDisplay}</a>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,54 @@
+---
+import { config } from '../data/site.config';
+import Icon from './Icon.astro';
+
+// Sourced from real Google reviews, not our own claims.
+const points = [
+  { icon: 'leaf', quote: 'Honest and reliable work at an affordable price.', who: 'Adrian B.', title: 'Honest, fair pricing' },
+  { icon: 'clock', quote: 'Arrived around 7:00 PM and had the system up and running before bedtime.', who: 'Sebastian R.', title: 'Fast, even after hours' },
+  { icon: 'spark', quote: 'Took the time to explain exactly what was going on and what needed to be done.', who: 'Jasmin L.', title: 'Explains everything' },
+  { icon: 'shield', quote: null, who: null, title: 'Licensed, insured, professional', body: 'A real licensed and insured contractor who explains the problem in plain language and stands behind the work.' },
+];
+---
+<section id="about" class="relative overflow-hidden bg-ink text-paper">
+  <div class="pointer-events-none absolute -right-24 top-0 h-96 w-96 rounded-full bg-coral/20 blur-3xl" aria-hidden="true"></div>
+  <div class="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:py-20">
+    <div>
+      <p class="text-sm font-semibold uppercase tracking-[0.18em] text-coral">Why neighbors call Abundant Air</p>
+      <h2 class="mt-2 text-3xl text-paper sm:text-4xl">Big-company skill,<br />without the big-company bill</h2>
+      <p class="mt-5 text-lg text-paper/80">
+        Abundant Air is independent and family-run. When you call, you reach the same team that
+        diagnoses the problem, does the work, and answers your questions. No call center, no
+        rotating crew, no padded invoice. Just honest HVAC from people who treat your home
+        like a neighbor's. Here is what customers say.
+      </p>
+      <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+        <a href={`tel:${config.phone}`} data-call class="inline-flex items-center justify-center gap-2 rounded-full bg-coral px-6 py-3.5 font-semibold text-white shadow-lift hover:bg-coral-deep">
+          <Icon name="phone" class="h-5 w-5" /> Talk to the team
+        </a>
+        <a href="#quote" class="inline-flex items-center justify-center gap-2 rounded-full border border-paper/25 px-6 py-3.5 font-semibold text-paper hover:bg-paper/10">
+          Request a quote
+        </a>
+      </div>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2">
+      {points.map((p) => (
+        <div class="flex flex-col rounded-3xl border border-paper/15 bg-paper/5 p-6">
+          <span class="grid h-11 w-11 place-items-center rounded-2xl bg-sage text-ink"><Icon name={p.icon} class="h-5 w-5" /></span>
+          <h3 class="mt-4 text-xl text-paper">{p.title}</h3>
+          {p.quote ? (
+            <>
+              <blockquote class="mt-2 flex-1 text-sm leading-relaxed text-paper/80">“{p.quote}”</blockquote>
+              <p class="mt-3 flex items-center gap-1.5 text-xs font-medium text-coral">
+                <Icon name="star" class="h-3.5 w-3.5" /> {p.who}, Google review
+              </p>
+            </>
+          ) : (
+            <p class="mt-2 text-sm leading-relaxed text-paper/75">{p.body}</p>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

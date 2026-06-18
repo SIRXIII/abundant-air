@@ -1,0 +1,80 @@
+---
+import { config } from '../data/site.config';
+import Icon from './Icon.astro';
+import ProjectImage from './ProjectImage.astro';
+import AirWave from './AirWave.astro';
+
+const chips = [
+  config.trust.emergencyAvailable && 'Same-day & after-hours',
+  'Honest, fair pricing',
+  config.trust.bilingualEs && 'Se habla español',
+  'Licensed & insured',
+].filter(Boolean) as string[];
+---
+<section class="grain relative overflow-hidden">
+  <!-- desert gradient wash -->
+  <div class="pointer-events-none absolute -right-32 -top-40 h-[34rem] w-[34rem] rounded-full bg-coral-tint blur-3xl opacity-60" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute -left-40 top-24 h-[28rem] w-[28rem] rounded-full bg-sage-tint blur-3xl opacity-50" aria-hidden="true"></div>
+
+  <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 pb-8 pt-10 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:pb-14 lg:pt-16">
+    <div class="rise">
+      <div class="inline-flex items-center gap-2 rounded-full border border-sandline bg-cream px-3 py-1.5 text-sm shadow-soft">
+        <span class="flex text-coral">
+          {Array.from({ length: 5 }).map(() => (<Icon name="star" class="h-4 w-4" />))}
+        </span>
+        <span class="font-semibold text-ink">{config.rating.value.toFixed(1)}</span>
+        <span class="text-ink-soft">· {config.rating.count} Google reviews</span>
+      </div>
+
+      <h1 class="mt-5 text-4xl leading-[1.04] text-ink sm:text-5xl lg:text-[3.4rem]">
+        Cool, comfortable air,<br />
+        <span class="wave-underline text-coral-deep">done right</span> by a team that cares.
+      </h1>
+
+      <p class="mt-5 max-w-xl text-lg text-ink-soft">
+        Abundant Air is your honest, licensed HVAC team in {config.primaryCity}.
+        AC repair, installs, heating, and the <strong class="font-semibold text-ink">expert ductwork</strong>
+        bigger companies get wrong, at a price that won't double your bill.
+      </p>
+
+      <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+        <a href={`tel:${config.phone}`} data-call
+          class="inline-flex items-center justify-center gap-2 rounded-full bg-coral px-6 py-3.5 text-base font-semibold text-white shadow-lift transition-colors hover:bg-coral-deep">
+          <Icon name="phone" class="h-5 w-5" /> Call {config.phoneDisplay}
+        </a>
+        <a href="#quote"
+          class="inline-flex items-center justify-center gap-2 rounded-full border border-ink/15 bg-cream px-6 py-3.5 text-base font-semibold text-ink transition-colors hover:border-ink/30">
+          Request a quote
+        </a>
+      </div>
+
+      <ul class="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-sm text-ink-soft">
+        {chips.map((c) => (
+          <li class="inline-flex items-center gap-1.5"><Icon name="check" class="h-4 w-4 text-sage-deep" />{c}</li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="rise rise-2 relative">
+      <div class="overflow-hidden rounded-[1.5rem] border border-sandline bg-cream shadow-lift">
+        <ProjectImage
+          src={config.gallery.find((g) => g.stage === 'after')?.src || 'duct-after-new-flex.jpg'}
+          alt="New, sealed ductwork installed by Abundant Air in La Quinta, CA"
+          widths={[480, 800, 1100]}
+          sizes="(max-width: 1024px) 100vw, 520px"
+          loading="eager"
+          class="aspect-[4/5] w-full object-cover"
+        />
+      </div>
+      <!-- floating proof card -->
+      <div class="absolute -bottom-5 -left-3 max-w-[15rem] rounded-2xl border border-sandline bg-paper/95 p-4 shadow-lift backdrop-blur sm:-left-6">
+        <div class="flex items-center gap-1 text-coral">
+          {Array.from({ length: 5 }).map(() => (<Icon name="star" class="h-4 w-4" />))}
+        </div>
+        <p class="mt-1.5 text-sm leading-snug text-ink">“You won't find better service anywhere else in the valley.”</p>
+        <p class="mt-1 text-xs font-medium text-ink-soft">Austin T., Google review</p>
+      </div>
+    </div>
+  </div>
+  <AirWave class="text-coral" />
+</section>

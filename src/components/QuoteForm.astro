@@ -1,0 +1,119 @@
+---
+import { config } from '../data/site.config';
+import Icon from './Icon.astro';
+const configured = !config.form.web3formsAccessKey.startsWith('REPLACE');
+---
+<section id="quote" class="relative scroll-mt-24 overflow-hidden bg-paper">
+  <div class="pointer-events-none absolute -left-32 bottom-0 h-96 w-96 rounded-full bg-sage-tint blur-3xl opacity-60" aria-hidden="true"></div>
+  <div class="relative mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:py-20">
+    <div>
+      <p class="text-sm font-semibold uppercase tracking-[0.18em] text-coral-deep">Get started</p>
+      <h2 class="mt-2 text-3xl text-ink sm:text-4xl">Tell us what's going on</h2>
+      <p class="mt-4 text-lg text-ink-soft">
+        Send a few details and you'll hear back fast with a straight answer and a fair price.
+        Need it handled now? Calling is quickest.
+      </p>
+
+      <div class="mt-7 space-y-3">
+        <a href={`tel:${config.phone}`} data-call class="flex items-center gap-4 rounded-2xl border border-sandline bg-cream p-4 shadow-soft transition-colors hover:border-coral">
+          <span class="grid h-11 w-11 place-items-center rounded-full bg-coral text-white"><Icon name="phone" class="h-5 w-5" /></span>
+          <span><span class="block text-sm text-ink-soft">Call</span><span class="block text-lg font-semibold text-ink">{config.phoneDisplay}</span></span>
+        </a>
+        <a href={`sms:${config.phoneSms}`} class="flex items-center gap-4 rounded-2xl border border-sandline bg-cream p-4 shadow-soft transition-colors hover:border-sage">
+          <span class="grid h-11 w-11 place-items-center rounded-full bg-sage text-white"><Icon name="sms" class="h-5 w-5" /></span>
+          <span><span class="block text-sm text-ink-soft">Text</span><span class="block text-lg font-semibold text-ink">{config.phoneDisplay}</span></span>
+        </a>
+      </div>
+    </div>
+
+    <form id="quote-form" class="rounded-[2rem] border border-sandline bg-cream p-6 shadow-lift sm:p-8" novalidate>
+      <input type="hidden" name="access_key" value={config.form.web3formsAccessKey} />
+      <input type="hidden" name="subject" value={`New quote request for ${config.businessName}`} />
+      <input type="hidden" name="from_name" value={config.businessName} />
+      <!-- honeypot -->
+      <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+
+      <div class="grid gap-4">
+        <label class="block">
+          <span class="text-sm font-semibold text-ink">Name</span>
+          <input name="name" required autocomplete="name" class="mt-1 w-full rounded-xl border border-sandline bg-paper px-4 py-3 text-ink outline-none focus:border-sage" placeholder="Your name" />
+        </label>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <label class="block">
+            <span class="text-sm font-semibold text-ink">Phone</span>
+            <input name="phone" type="tel" required autocomplete="tel" class="mt-1 w-full rounded-xl border border-sandline bg-paper px-4 py-3 text-ink outline-none focus:border-sage" placeholder="(760) 000-0000" />
+          </label>
+          <label class="block">
+            <span class="text-sm font-semibold text-ink">City</span>
+            <select name="city" class="mt-1 w-full rounded-xl border border-sandline bg-paper px-4 py-3 text-ink outline-none focus:border-sage">
+              {config.serviceAreas.map((a) => (<option>{a.name}</option>))}
+              <option>Other</option>
+            </select>
+          </label>
+        </div>
+        <label class="block">
+          <span class="text-sm font-semibold text-ink">What do you need?</span>
+          <select name="job_type" class="mt-1 w-full rounded-xl border border-sandline bg-paper px-4 py-3 text-ink outline-none focus:border-sage">
+            {config.form.jobTypes.map((j) => (<option>{j}</option>))}
+          </select>
+        </label>
+        <label class="block">
+          <span class="text-sm font-semibold text-ink">Details <span class="font-normal text-ink-soft">(optional)</span></span>
+          <textarea name="message" rows="3" class="mt-1 w-full rounded-xl border border-sandline bg-paper px-4 py-3 text-ink outline-none focus:border-sage" placeholder="Tell us what's happening with your AC, heating, or ducts."></textarea>
+        </label>
+
+        <button type="submit" class="inline-flex items-center justify-center gap-2 rounded-full bg-coral px-6 py-3.5 text-base font-semibold text-white shadow-lift transition-colors hover:bg-coral-deep disabled:opacity-60">
+          <Icon name="spark" class="h-5 w-5" /> Send my request
+        </button>
+        <p id="quote-status" class="text-center text-sm" role="status" aria-live="polite"></p>
+        <p class="text-center text-xs text-ink-soft">No spam. Your details go straight to the Abundant Air team.</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<script is:inline define:vars={{ configured }}>
+  const form = document.getElementById('quote-form');
+  const status = document.getElementById('quote-status');
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('button[type=submit]');
+      status.textContent = '';
+      status.className = 'text-center text-sm';
+      if (!configured) {
+        status.textContent = 'Phone is fastest right now. Please call or text. Online form coming online shortly.';
+        status.classList.add('text-coral-deep');
+        return;
+      }
+      if (!form.name.value.trim() || !form.phone.value.trim()) {
+        status.textContent = 'Please add your name and phone so we can reach you.';
+        status.classList.add('text-coral-deep');
+        return;
+      }
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(Object.fromEntries(new FormData(form))),
+        });
+        const data = await res.json();
+        if (data.success) {
+          window.location.href = '/thanks';
+        } else {
+          status.textContent = 'Something went wrong. Please call or text ' + form.dataset.phone + '.';
+          status.classList.add('text-coral-deep');
+          btn.disabled = false;
+          btn.textContent = 'Send my request';
+        }
+      } catch {
+        status.textContent = 'Network issue. Please call or text us instead.';
+        status.classList.add('text-coral-deep');
+        btn.disabled = false;
+        btn.textContent = 'Send my request';
+      }
+    });
+  }
+</script>

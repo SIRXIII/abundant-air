@@ -1,0 +1,13 @@
+{
+  "name": "Abundant Air Conditioning & Heating LLC",
+  "short_name": "Abundant Air",
+  "description": "Honest AC repair, installation, heating & expert ductwork in La Quinta & the Coachella Valley.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6f1e9",
+  "theme_color": "#16302b",
+  "icons": [
+    { "src": "/favicon-180.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/favicon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectImage from '../../components/ProjectImage.astro';
+import Icon from '../../components/Icon.astro';
+import Testimonials from '../../components/Testimonials.astro';
+import AreaServed from '../../components/AreaServed.astro';
+import QuoteForm from '../../components/QuoteForm.astro';
+import CTABanner from '../../components/CTABanner.astro';
+import { config } from '../../data/site.config';
+
+export function getStaticPaths() {
+  return config.services.map((s) => ({ params: { id: s.id }, props: { service: s } }));
+}
+const { service } = Astro.props;
+const others = config.services.filter((s) => s.id !== service.id);
+const title = `${service.name} in ${config.primaryCity} & the ${config.region}`;
+const description = `${service.shortDesc} ${config.businessName}. 5.0★, licensed & insured. Call ${config.phoneDisplay}.`;
+---
+<BaseLayout title={title} description={description} path={`/services/${service.id}`}>
+  <!-- breadcrumb + hero -->
+  <section class="grain relative overflow-hidden border-b border-sandline">
+    <div class="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-coral-tint blur-3xl opacity-60" aria-hidden="true"></div>
+    <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 py-12 sm:px-6 lg:grid-cols-2 lg:py-16">
+      <div>
+        <nav class="text-sm text-ink-soft"><a href="/" class="hover:text-ink">Home</a> <span class="px-1">/</span> <a href="/#services" class="hover:text-ink">Services</a> <span class="px-1">/</span> <span class="text-ink">{service.name}</span></nav>
+        <span class="mt-5 grid h-12 w-12 place-items-center rounded-2xl bg-coral text-white"><Icon name={service.icon} class="h-6 w-6" /></span>
+        <h1 class="mt-4 text-3xl text-ink sm:text-4xl lg:text-5xl">{service.name} in <span class="wave-underline">{config.primaryCity}, CA</span></h1>
+        <p class="mt-4 max-w-xl text-lg text-ink-soft">{service.longDesc}</p>
+        <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+          <a href={`tel:${config.phone}`} data-call class="inline-flex items-center justify-center gap-2 rounded-full bg-coral px-6 py-3.5 font-semibold text-white shadow-lift hover:bg-coral-deep"><Icon name="phone" class="h-5 w-5" /> Call {config.phoneDisplay}</a>
+          <a href="#quote" class="inline-flex items-center justify-center gap-2 rounded-full border border-ink/15 bg-cream px-6 py-3.5 font-semibold text-ink hover:border-ink/30">Request a quote</a>
+        </div>
+      </div>
+      <div class="overflow-hidden rounded-[1.5rem] border border-sandline shadow-lift">
+        <ProjectImage src={service.heroImage} alt={`${service.name} by ${config.businessName} in ${config.primaryCity}, CA`} widths={[480, 800, 1100]} sizes="(max-width:1024px) 100vw, 520px" loading="eager" class="aspect-[4/3] w-full object-cover" />
+      </div>
+    </div>
+  </section>
+
+  <!-- what's included -->
+  <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+    <div class="grid gap-10 lg:grid-cols-[1fr_1.2fr]">
+      <div>
+        <h2 class="text-2xl text-ink sm:text-3xl">What's included</h2>
+        <ul class="mt-5 space-y-3">
+          {service.bullets.map((b) => (
+            <li class="flex items-start gap-3 text-ink-soft"><Icon name="check" class="mt-0.5 h-5 w-5 shrink-0 text-sage-deep" />{b}</li>
+          ))}
+        </ul>
+      </div>
+      <div class="rounded-3xl border border-sandline bg-cream p-6 shadow-soft sm:p-8">
+        <h3 class="text-xl text-ink">Why homeowners pick Abundant Air</h3>
+        <p class="mt-3 text-ink-soft">Independent and family-run, licensed and insured, with a perfect 5.0 rating on Google. You get a fair price, an honest diagnosis, and a team that shows up on time and stands behind the work.</p>
+        <div class="mt-5 flex flex-wrap gap-2 text-sm">
+          {['5.0★ on Google','Licensed & insured','Same-day & after-hours', config.trust.bilingualEs && 'Se habla español'].filter(Boolean).map((c) => (
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-sage-tint px-3 py-1 font-medium text-sage-deep"><Icon name="check" class="h-4 w-4" />{c}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- other services -->
+    <div class="mt-12">
+      <h2 class="text-2xl text-ink sm:text-3xl">More from Abundant Air</h2>
+      <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {others.map((s) => (
+          <a href={`/services/${s.id}`} class="group rounded-2xl border border-sandline bg-cream p-5 shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-lift">
+            <span class="grid h-10 w-10 place-items-center rounded-xl bg-coral-tint text-coral-deep"><Icon name={s.icon} class="h-5 w-5" /></span>
+            <h3 class="mt-3 font-semibold text-ink">{s.name}</h3>
+            <span class="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-sage-deep transition-transform group-hover:translate-x-1">Learn more →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Testimonials />
+  <AreaServed />
+  <QuoteForm />
+  <CTABanner heading={`Need ${service.name.toLowerCase()}?`} />
+</BaseLayout>

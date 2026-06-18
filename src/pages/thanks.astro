@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { config } from '../data/site.config';
+---
+<BaseLayout title="Thank you" description="Your request was sent to Abundant Air Conditioning & Heating." path="/thanks">
+  <section class="mx-auto flex max-w-2xl flex-col items-center px-4 py-24 text-center sm:px-6">
+    <span class="grid h-16 w-16 place-items-center rounded-full bg-sage text-white shadow-lift"><Icon name="check" class="h-8 w-8" /></span>
+    <h1 class="mt-6 text-4xl text-ink">Got it, thank you!</h1>
+    <p class="mt-4 text-lg text-ink-soft">Your request is on its way to the Abundant Air team. You'll hear back soon. Need it handled right now? Calling is quickest.</p>
+    <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+      <a href={`tel:${config.phone}`} data-call class="inline-flex items-center justify-center gap-2 rounded-full bg-coral px-6 py-3.5 font-semibold text-white shadow-lift hover:bg-coral-deep"><Icon name="phone" class="h-5 w-5" /> Call {config.phoneDisplay}</a>
+      <a href="/" class="inline-flex items-center justify-center gap-2 rounded-full border border-ink/15 bg-cream px-6 py-3.5 font-semibold text-ink hover:border-ink/30">Back to home</a>
+    </div>
+  </section>
+</BaseLayout>

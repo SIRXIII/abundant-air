@@ -1,0 +1,30 @@
+---
+import { config } from '../data/site.config';
+import Icon from './Icon.astro';
+---
+<section id="areas" class="mx-auto max-w-6xl scroll-mt-24 px-4 py-16 sm:px-6 lg:py-20">
+  <div class="rounded-[2rem] border border-sandline bg-cream p-8 shadow-soft sm:p-12">
+    <div class="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-center">
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-[0.18em] text-sage-deep">Where we work</p>
+        <h2 class="mt-2 text-3xl text-ink sm:text-4xl">Serving {config.primaryCity} &amp; the whole {config.region}</h2>
+        <p class="mt-4 text-lg text-ink-soft">
+          Based in {config.primaryCity}, Abundant Air covers the desert cities end to end. If you're
+          in the valley and your air isn't right, you're in the service area.
+        </p>
+        <a href={`tel:${config.phone}`} data-call class="mt-6 inline-flex items-center gap-2 rounded-full bg-coral px-6 py-3 font-semibold text-white shadow-soft hover:bg-coral-deep">
+          <Icon name="phone" class="h-5 w-5" /> Call {config.phoneDisplay}
+        </a>
+      </div>
+      <ul class="grid grid-cols-2 gap-3 sm:grid-cols-3">
+        {config.serviceAreas.map((a) => (
+          <li>
+            <a href={`/areas/${a.id}`} class="flex items-center gap-2 rounded-xl border border-sandline bg-paper px-3 py-2.5 text-sm font-medium text-ink transition-colors hover:border-sage hover:text-sage-deep">
+              <Icon name="map" class="h-4 w-4 text-sage-deep" /> {a.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

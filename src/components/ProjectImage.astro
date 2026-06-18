@@ -1,0 +1,46 @@
+---
+// Resolves a filename from site.config (e.g. "duct-after-new-flex.jpg")
+// to an optimized <Image>. One glob map shared by gallery + service pages.
+import { Image } from 'astro:assets';
+
+interface Props {
+  src: string;
+  alt: string;
+  widths?: number[];
+  sizes?: string;
+  loading?: 'lazy' | 'eager';
+  class?: string;
+}
+
+const {
+  src,
+  alt,
+  widths = [400, 800, 1200],
+  sizes = '(max-width: 768px) 100vw, 50vw',
+  loading = 'lazy',
+  class: className = '',
+} = Astro.props;
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/images/projects/*.{jpg,jpeg,png}'
+);
+const key = `../assets/images/projects/${src}`;
+const mod = images[key];
+---
+{
+  mod ? (
+    <Image
+      src={mod()}
+      alt={alt}
+      widths={widths}
+      sizes={sizes}
+      loading={loading}
+      decoding="async"
+      class={className}
+    />
+  ) : (
+    <div class={`flex items-center justify-center bg-sandline text-ink-soft text-sm ${className}`}>
+      {alt}
+    </div>
+  )
+}

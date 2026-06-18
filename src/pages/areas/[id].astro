@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+import ProjectImage from '../../components/ProjectImage.astro';
+import Testimonials from '../../components/Testimonials.astro';
+import QuoteForm from '../../components/QuoteForm.astro';
+import CTABanner from '../../components/CTABanner.astro';
+import { config } from '../../data/site.config';
+
+export function getStaticPaths() {
+  return config.serviceAreas.map((a) => ({ params: { id: a.id }, props: { area: a } }));
+}
+const { area } = Astro.props;
+const others = config.serviceAreas.filter((a) => a.id !== area.id);
+const title = `HVAC, AC Repair & Ductwork in ${area.name}, CA`;
+const description = `Honest AC repair, installation, heating, and ductwork in ${area.name}, ${area.county} County. ${config.businessName}. 5.0★, licensed. Call ${config.phoneDisplay}.`;
+---
+<BaseLayout title={title} description={description} path={`/areas/${area.id}`}>
+  <section class="grain relative overflow-hidden border-b border-sandline">
+    <div class="pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full bg-sage-tint blur-3xl opacity-60" aria-hidden="true"></div>
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:py-16">
+      <nav class="text-sm text-ink-soft"><a href="/" class="hover:text-ink">Home</a> <span class="px-1">/</span> <a href="/#areas" class="hover:text-ink">Areas</a> <span class="px-1">/</span> <span class="text-ink">{area.name}</span></nav>
+      <span class="mt-5 inline-flex items-center gap-2 rounded-full border border-sandline bg-cream px-3 py-1.5 text-sm font-medium text-sage-deep shadow-soft"><Icon name="map" class="h-4 w-4" /> {area.name}, {area.state}</span>
+      <h1 class="mt-4 max-w-3xl text-3xl text-ink sm:text-4xl lg:text-5xl">HVAC, AC repair &amp; <span class="wave-underline">expert ductwork</span> in {area.name}</h1>
+      <p class="mt-4 max-w-2xl text-lg text-ink-soft">
+        Abundant Air keeps {area.name} homes cool through the summer and warm on cold desert nights.
+        Our team delivers honest diagnoses, fair pricing, and the ductwork expertise that makes a
+        system actually perform, with same-day and after-hours service when you need it.
+      </p>
+      <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+        <a href={`tel:${config.phone}`} data-call class="inline-flex items-center justify-center gap-2 rounded-full bg-coral px-6 py-3.5 font-semibold text-white shadow-lift hover:bg-coral-deep"><Icon name="phone" class="h-5 w-5" /> Call {config.phoneDisplay}</a>
+        <a href="#quote" class="inline-flex items-center justify-center gap-2 rounded-full border border-ink/15 bg-cream px-6 py-3.5 font-semibold text-ink hover:border-ink/30">Request a quote</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- services in this city -->
+  <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+    <h2 class="text-2xl text-ink sm:text-3xl">What we do in {area.name}</h2>
+    <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {config.services.map((s) => (
+        <a href={`/services/${s.id}`} class="group flex items-start gap-4 rounded-2xl border border-sandline bg-cream p-5 shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-lift">
+          <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-coral-tint text-coral-deep"><Icon name={s.icon} class="h-5 w-5" /></span>
+          <span>
+            <span class="block font-semibold text-ink">{s.name} in {area.name}</span>
+            <span class="mt-1 block text-sm text-ink-soft">{s.shortDesc}</span>
+          </span>
+        </a>
+      ))}
+    </div>
+
+    <div class="mt-12 grid items-center gap-8 rounded-[2rem] border border-sandline bg-cream p-6 shadow-soft sm:p-10 lg:grid-cols-2">
+      <div class="overflow-hidden rounded-2xl border border-sandline">
+        <ProjectImage src={config.featuredBeforeAfter.after} alt={`New ductwork installed by Abundant Air near ${area.name}, CA`} widths={[480, 800]} sizes="(max-width:1024px) 100vw, 480px" class="aspect-[4/3] w-full object-cover" />
+      </div>
+      <div>
+        <h3 class="text-2xl text-ink">Ductwork done right near {area.name}</h3>
+        <p class="mt-3 text-ink-soft">Cold air leaking into the attic is wasted money. Abundant Air replaces failing ducts, seals every joint, and insulates properly so {area.name} homes cool evenly and the power bill drops.</p>
+        <a href="/services/ductwork" class="mt-5 inline-flex items-center gap-1.5 font-semibold text-sage-deep hover:text-sage">See the ductwork work →</a>
+      </div>
+    </div>
+
+    <!-- nearby cities -->
+    <div class="mt-12">
+      <h2 class="text-2xl text-ink sm:text-3xl">Also serving nearby</h2>
+      <ul class="mt-5 flex flex-wrap gap-2">
+        {others.map((a) => (
+          <li><a href={`/areas/${a.id}`} class="inline-flex items-center gap-1.5 rounded-full border border-sandline bg-paper px-4 py-2 text-sm font-medium text-ink transition-colors hover:border-sage hover:text-sage-deep"><Icon name="map" class="h-4 w-4 text-sage-deep" />{a.name}</a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <Testimonials />
+  <QuoteForm />
+  <CTABanner heading={`Proudly serving ${area.name}`} sub={`AC repair, installation, heating & ductwork in ${area.name} and across the ${config.region}.`} />
+</BaseLayout>

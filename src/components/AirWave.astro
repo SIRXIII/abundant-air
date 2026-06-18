@@ -1,0 +1,22 @@
+---
+// The signature anchor: the logo's air-wave line, reused as a section divider.
+// A coral -> sun -> sage gradient stroke = "moving air."
+interface Props { class?: string; flip?: boolean; }
+const { class: className = '', flip = false } = Astro.props;
+const id = 'aw-' + Math.random().toString(36).slice(2, 8);
+---
+<div class={`airwave ${className}`} style={flip ? 'transform:scaleY(-1)' : ''} aria-hidden="true">
+  <svg viewBox="0 0 1200 24" preserveAspectRatio="none">
+    <defs>
+      <linearGradient id={id} x1="0" x2="1" y1="0" y2="0">
+        <stop offset="0" stop-color="var(--color-coral)" />
+        <stop offset="0.5" stop-color="var(--color-sun)" />
+        <stop offset="1" stop-color="var(--color-sage)" />
+      </linearGradient>
+    </defs>
+    <path d="M0 14 C 80 4, 140 4, 220 14 S 360 24, 440 14 S 580 4, 660 14 S 800 24, 880 14 S 1020 4, 1100 14 S 1180 18, 1200 14"
+      fill="none" stroke={`url(#${id})`} stroke-width="3" stroke-linecap="round" />
+    <path d="M0 19 C 80 11, 150 11, 230 19 S 380 27, 460 19 S 600 11, 680 19 S 820 27, 900 19 S 1040 11, 1120 19 S 1185 21, 1200 19"
+      fill="none" stroke={`url(#${id})`} stroke-width="2" stroke-linecap="round" opacity="0.5" />
+  </svg>
+</div>

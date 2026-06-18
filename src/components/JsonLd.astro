@@ -1,0 +1,61 @@
+---
+import { config } from '../data/site.config';
+
+const base = config.seo.canonicalBase;
+const hasEmail = !config.email.startsWith('REPLACE');
+
+const data: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': ['HVACBusiness', 'HomeAndConstructionBusiness', 'LocalBusiness'],
+  '@id': base + '/#business',
+  name: config.businessName,
+  description: config.seo.defaultDescription,
+  url: base + '/',
+  telephone: config.phone,
+  image: base + config.seo.ogImage,
+  logo: base + '/favicon-512.png',
+  priceRange: '$$',
+  paymentAccepted: 'Cash, Check, Credit Card',
+  currenciesAccepted: 'USD',
+  areaServed: config.serviceAreas.map((a) => ({
+    '@type': 'City',
+    name: `${a.name}, ${a.state}`,
+  })),
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: config.address.city,
+    addressRegion: config.address.state,
+    postalCode: config.address.zip,
+    addressCountry: 'US',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: config.address.geo.lat,
+    longitude: config.address.geo.lng,
+  },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: config.rating.value,
+    reviewCount: config.rating.count,
+    bestRating: 5,
+  },
+  review: config.testimonials.map((t) => ({
+    '@type': 'Review',
+    reviewRating: { '@type': 'Rating', ratingValue: t.rating, bestRating: 5 },
+    author: { '@type': 'Person', name: t.name },
+    reviewBody: t.text,
+  })),
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'HVAC Services',
+    itemListElement: config.services.map((s) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: s.name, description: s.shortDesc },
+    })),
+  },
+  knowsLanguage: config.trust.bilingualEs ? ['en', 'es'] : ['en'],
+  sameAs: Object.values(config.social).filter(Boolean),
+};
+if (hasEmail) data.email = config.email;
+---
+<script type="application/ld+json" set:html={JSON.stringify(data)} />

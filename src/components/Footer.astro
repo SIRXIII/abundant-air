@@ -1,0 +1,57 @@
+---
+import { config } from '../data/site.config';
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+import AirWave from './AirWave.astro';
+
+const year = 2026;
+const featuredAreas = config.serviceAreas.filter((a) => a.featured);
+const licenseLine = config.trust.licenseNumber
+  ? `Licensed & insured · Lic. #${config.trust.licenseNumber}`
+  : 'Licensed & insured · License # available on request';
+---
+<footer class="relative mt-2 bg-ink text-paper">
+  <AirWave class="text-coral" />
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-4">
+    <div class="md:col-span-2">
+      <span class="inline-block rounded-xl bg-paper px-3 py-2">
+        <Logo class="h-12 w-auto" width={240} />
+      </span>
+      <p class="mt-4 max-w-sm text-paper/70">
+        {config.tagline}. Family-run and based in {config.primaryCity}, serving the whole {config.region}.
+      </p>
+      <p class="mt-4 flex flex-wrap items-center gap-2 text-sm text-paper/70">
+        <Icon name="shield" class="h-4 w-4 text-sage" /> {licenseLine}
+        {config.trust.bilingualEs && (<><span class="text-paper/30">·</span><Icon name="globe" class="h-4 w-4 text-sage" /> Se habla español</>)}
+      </p>
+    </div>
+
+    <div>
+      <h4 class="text-sm font-semibold uppercase tracking-wider text-sage">Contact</h4>
+      <ul class="mt-3 space-y-2 text-paper/80">
+        <li><a class="inline-flex items-center gap-2 hover:text-white" href={`tel:${config.phone}`} data-call><Icon name="phone" class="h-4 w-4" />{config.phoneDisplay}</a></li>
+        <li><a class="inline-flex items-center gap-2 hover:text-white" href={`sms:${config.phoneSms}`}><Icon name="sms" class="h-4 w-4" />Text {config.phoneDisplay}</a></li>
+        <li><span class="inline-flex items-center gap-2"><Icon name="map" class="h-4 w-4" />{config.primaryCity}, {config.address.state}</span></li>
+        {config.social.googleBusinessProfile && (
+          <li><a class="inline-flex items-center gap-2 hover:text-white" href={config.social.googleBusinessProfile} target="_blank" rel="noopener"><Icon name="star" class="h-4 w-4 text-coral" />{config.rating.value.toFixed(1)} on Google</a></li>
+        )}
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-sm font-semibold uppercase tracking-wider text-sage">Service Area</h4>
+      <ul class="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-paper/80">
+        {featuredAreas.map((a) => (
+          <li><a class="hover:text-white" href={`/areas/${a.id}`}>{a.name}</a></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-paper/15">
+    <div class="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-5 text-xs text-paper/55 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+      <p>© {year} {config.businessName}. All rights reserved.</p>
+      <p>HVAC repair, installation &amp; ductwork · {config.primaryCity} &amp; the {config.region}</p>
+    </div>
+  </div>
+</footer>
