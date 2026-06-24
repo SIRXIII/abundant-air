@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // Swap `site` to the real domain when the client connects one.
 export default defineConfig({
-  site: 'https://abundant-air.pages.dev',
+  site: 'https://abundantairac.com',
   output: 'static',
   integrations: [sitemap()],
   vite: {
