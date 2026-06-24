@@ -119,7 +119,7 @@ export const config: SiteConfig = {
   phone: '+17604233404',
   phoneDisplay: '(760) 423-3404',
   phoneSms: '+17604233404',
-  email: 'info@abundantairac.com',
+  email: '13.csilva@gmail.com',
   address: {
     // Mobile contractor — city only, no street published.
     city: 'La Quinta',

@@ -14,14 +14,15 @@ const nav = [
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-2.5 sm:px-6">
     <a href="/" class="flex items-center gap-3" aria-label={`${config.businessName} home`}>
       <video
+        id="logo-vid"
         autoplay
         loop
         muted
         playsinline
+        src="/logo-video.mp4"
         class="h-16 w-auto sm:h-20"
         aria-label={config.brand.logoAlt}
       >
-        <source src="/logo-video.mp4" type="video/mp4" />
         <Logo class="h-16 w-auto sm:h-20" width={320} />
       </video>
     </a>
@@ -51,3 +52,7 @@ const nav = [
     </div>
   </div>
 </header>
+<script>
+  const v = document.getElementById('logo-vid') as HTMLVideoElement | null;
+  if (v) v.addEventListener('canplay', () => v.play().catch(() => {}), { once: true });
+</script>
