@@ -58,6 +58,12 @@ h1, h2, h3, h4 {
   line-height: 1.05;
 }
 
+/* Tactile button press — physical push feel */
+a[class*="bg-coral"]:active,
+button[class*="bg-ink"]:active {
+  transform: scale(0.97) translateY(1px);
+}
+
 /* Accessible focus ring in brand color */
 :focus-visible {
   outline: 3px solid var(--color-sage);
@@ -93,8 +99,14 @@ h1, h2, h3, h4 {
 .rise-3 { animation-delay: 0.2s; }
 .rise-4 { animation-delay: 0.3s; }
 
+/* Gallery stagger reveal */
+[data-stage] {
+  animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 60ms);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .rise, .rise-2, .rise-3, .rise-4 { animation: none; }
+  .rise, .rise-2, .rise-3, .rise-4, [data-stage] { animation: none; }
   html { scroll-behavior: auto; }
 }
 

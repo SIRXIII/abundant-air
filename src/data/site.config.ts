@@ -142,7 +142,7 @@ export const config: SiteConfig = {
   trust: {
     licensed: true,
     insured: true,
-    licenseNumber: undefined, // shows "license # available on request"
+    licenseNumber: '1150839',
     yearsInBusiness: undefined,
     bilingualEs: true,
     freeEstimates: false,
@@ -245,6 +245,44 @@ export const config: SiteConfig = {
       keywords: ['AC tune-up', 'AC maintenance La Quinta', 'HVAC service'],
       featured: false,
     },
+    {
+      id: 'mini-splits',
+      name: 'Mini Split Systems',
+      nameEs: 'Sistemas mini split',
+      icon: 'split',
+      shortDesc:
+        'Ductless heating and cooling for additions, garages, and rooms that never get comfortable.',
+      longDesc:
+        'Mini splits deliver targeted heating and cooling without running new ductwork. Abundant Air sizes and installs wall-mounted indoor units paired with efficient outdoor condensers, perfect for converted garages, room additions, or any space the central system cannot reach. Quiet, energy-efficient, and individually controlled per room.',
+      bullets: [
+        'Ductless wall-mounted indoor units',
+        'Efficient inverter-driven condensers',
+        'Zone control for individual rooms',
+        'Ideal for additions, garages, and hard-to-cool spaces',
+      ],
+      heroImage: 'mini-split-outdoor.jpg',
+      keywords: ['mini split', 'ductless AC', 'mini split installation La Quinta'],
+      featured: true,
+    },
+    {
+      id: 'air-quality',
+      name: 'Indoor Air Quality Solutions',
+      nameEs: 'Soluciones de calidad del aire interior',
+      icon: 'air',
+      shortDesc:
+        'Breathe cleaner air at home with filtration upgrades, UV systems, and proper ventilation.',
+      longDesc:
+        'Desert dust, pet dander, and sealed-up homes mean the air inside can be worse than outside. Abundant Air installs high-efficiency filters, UV germicidal lights, and fresh-air ventilation to clean up what your family breathes every day. Paired with sealed ductwork, the result is noticeably cleaner, healthier air.',
+      bullets: [
+        'High-efficiency air filtration upgrades',
+        'UV germicidal light installation',
+        'Fresh-air ventilation solutions',
+        'Works with sealed ductwork for best results',
+      ],
+      heroImage: 'tech-condenser-service.jpg',
+      keywords: ['indoor air quality', 'air purification La Quinta', 'HVAC air filtration'],
+      featured: false,
+    },
   ],
 
   primaryCity: 'La Quinta',
@@ -272,6 +310,14 @@ export const config: SiteConfig = {
     { src: 'duct-after-clean-run.jpg', stage: 'after', caption: 'New plenum and duct run installed straight and supported', alt: 'New plenum and air duct run cleanly installed by Abundant Air, La Quinta CA' },
     { src: 'duct-after-insulated.jpg', stage: 'after', caption: 'Fresh ducts wrapped in proper insulation to hold the cold', alt: 'New ductwork wrapped in fiberglass insulation by Abundant Air' },
     { src: 'duct-after-sealed-joints.jpg', stage: 'after', caption: 'Foil-taped, sealed joints so no cold air escapes', alt: 'Sealed and foil-taped duct joints finished by Abundant Air, Coachella Valley' },
+    { src: 'furnace-install.jpg', stage: 'after', caption: 'New Marazerm furnace installed clean and level', alt: 'New furnace installation by Abundant Air in La Quinta CA' },
+    { src: 'condenser-oxbox.jpg', stage: 'after', caption: 'OXBOX condenser unit set on a fresh pad, ready to cool', alt: 'New OXBOX condenser unit installed by Abundant Air, Coachella Valley' },
+    { src: 'mini-split-outdoor.jpg', stage: 'after', caption: 'Mini split outdoor units installed for zone cooling', alt: 'Mini split outdoor condensers installed by Abundant Air in La Quinta CA' },
+    { src: 'rooftop-diagnostics.jpg', stage: 'process', caption: 'Rooftop unit diagnostics with refrigerant gauges', alt: 'Abundant Air technician diagnosing rooftop HVAC unit with gauges' },
+    { src: 'mini-split-before.jpg', stage: 'before', caption: 'Room before mini split installation — no dedicated cooling', alt: 'Room before ductless mini split installation by Abundant Air' },
+    { src: 'mini-split-after.jpg', stage: 'after', caption: 'Mirage X Life mini split installed, room stays cool year-round', alt: 'Wall-mounted Mirage mini split installed by Abundant Air, La Quinta CA' },
+    { src: 'tech-furnace-work.jpg', stage: 'process', caption: 'Abundant Air tech servicing a furnace on site', alt: 'Abundant Air technician working on furnace installation' },
+    { src: 'tech-condenser-service.jpg', stage: 'process', caption: 'Checking refrigerant levels on an outdoor condenser', alt: 'Abundant Air technician servicing outdoor condenser unit with R-407C' },
   ],
 
   featuredBeforeAfter: {
@@ -349,6 +395,8 @@ export const config: SiteConfig = {
       'AC not cooling / repair',
       'New AC install or replacement',
       'Heating / furnace',
+      'Mini split system',
+      'Indoor air quality',
       'Tune-up / maintenance',
       'Other',
     ],

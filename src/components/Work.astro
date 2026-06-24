@@ -31,8 +31,26 @@ const filters = [
         <a href="#quote" class="mt-6 inline-flex items-center gap-2 rounded-full bg-coral px-6 py-3 font-semibold text-white shadow-soft transition-colors hover:bg-coral-deep">
           Get this done at your place
         </a>
+        <div class="mt-5 flex gap-2" data-ba-tabs>
+          <button type="button" data-ba-tab="duct" class="rounded-full border px-4 py-1.5 text-sm font-semibold transition-colors border-ink bg-ink text-paper">Ductwork</button>
+          <button type="button" data-ba-tab="split" class="rounded-full border px-4 py-1.5 text-sm font-semibold transition-colors border-sandline bg-paper text-ink-soft hover:border-ink/30">Mini Split</button>
+        </div>
       </div>
-      <BeforeAfter />
+      <div data-ba-panels>
+        <div data-ba-panel="duct">
+          <BeforeAfter />
+        </div>
+        <div data-ba-panel="split" class="hidden">
+          <BeforeAfter
+            before="mini-split-before.jpg"
+            after="mini-split-after.jpg"
+            beforeAlt="Room before ductless mini split installation by Abundant Air"
+            afterAlt="Wall-mounted Mirage mini split installed by Abundant Air, La Quinta CA"
+            caption="Drag to compare · room with no cooling → Mirage X Life mini split by Abundant Air"
+            label="Drag to compare mini split before and after"
+          />
+        </div>
+      </div>
     </div>
 
     <!-- filterable gallery -->
@@ -51,8 +69,8 @@ const filters = [
       </div>
 
       <ul class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-        {config.gallery.map((g) => (
-          <li data-stage={g.stage} class="group overflow-hidden rounded-2xl border border-sandline bg-paper shadow-soft">
+        {config.gallery.map((g, i) => (
+          <li data-stage={g.stage} style={`--i:${i}`} class="group overflow-hidden rounded-2xl border border-sandline bg-paper shadow-soft">
             <div class="relative">
               <ProjectImage src={g.src} alt={g.alt} widths={[300, 600]} sizes="(max-width:640px) 50vw, 25vw" class="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105" />
               <span class:list={['absolute left-2 top-2 rounded-full px-2.5 py-0.5 text-[0.7rem] font-semibold shadow', stageClass[g.stage]]}>{stageLabel[g.stage]}</span>
@@ -66,6 +84,33 @@ const filters = [
 </section>
 
 <script>
+  // Before/after tabs
+  document.querySelectorAll<HTMLElement>('[data-ba-tabs]').forEach((tabs) => {
+    const panels = tabs.closest('.grid')?.querySelector('[data-ba-panels]');
+    if (!panels) return;
+    tabs.querySelectorAll<HTMLButtonElement>('[data-ba-tab]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const key = btn.dataset.baTab!;
+        tabs.querySelectorAll<HTMLButtonElement>('[data-ba-tab]').forEach((b) => {
+          const on = b === btn;
+          b.classList.toggle('bg-ink', on);
+          b.classList.toggle('text-paper', on);
+          b.classList.toggle('border-ink', on);
+          b.classList.toggle('bg-paper', !on);
+          b.classList.toggle('text-ink-soft', !on);
+          b.classList.toggle('border-sandline', !on);
+        });
+        panels.querySelectorAll<HTMLElement>('[data-ba-panel]').forEach((p) => {
+          p.classList.toggle('hidden', p.dataset.baPanel !== key);
+          // reset slider position when switching
+          const ba = p.querySelector<HTMLElement>('.ba');
+          const range = p.querySelector<HTMLInputElement>('.ba-range');
+          if (ba && range) { range.value = '50'; ba.style.setProperty('--pos', '50%'); }
+        });
+      });
+    });
+  });
+
   document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((root) => {
     const buttons = root.querySelectorAll<HTMLButtonElement>('[data-filter]');
     const items = root.querySelectorAll<HTMLElement>('[data-stage]');
