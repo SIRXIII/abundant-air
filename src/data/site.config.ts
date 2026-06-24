@@ -119,7 +119,7 @@ export const config: SiteConfig = {
   phone: '+17604233404',
   phoneDisplay: '(760) 423-3404',
   phoneSms: '+17604233404',
-  email: 'REPLACE_WITH_CLIENT_EMAIL', // guarded: hidden from page + schema until set
+  email: '13.csilva@gmail.com', // guarded: hidden from page + schema until set
   address: {
     // Mobile contractor — city only, no street published.
     city: 'La Quinta',
@@ -342,8 +342,8 @@ export const config: SiteConfig = {
 
   form: {
     provider: 'web3forms',
-    web3formsAccessKey: 'REPLACE_WITH_WEB3FORMS_KEY',
-    toEmail: 'REPLACE_WITH_CLIENT_EMAIL',
+    web3formsAccessKey: '1fb1e158-4399-4b2f-a8e3-b016f2c1a076',
+    toEmail: '13.csilva@gmail.com',
     jobTypes: [
       'Ductwork replacement / sealing',
       'AC not cooling / repair',
