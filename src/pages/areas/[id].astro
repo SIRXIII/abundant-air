@@ -12,8 +12,8 @@ export function getStaticPaths() {
 }
 const { area } = Astro.props;
 const others = config.serviceAreas.filter((a) => a.id !== area.id);
-const title = `HVAC, AC Repair & Ductwork in ${area.name}, CA`;
-const description = `Honest AC repair, installation, heating, and ductwork in ${area.name}, ${area.county} County. ${config.businessName}. 5.0★, licensed. Call ${config.phoneDisplay}.`;
+const title = `HVAC & AC Repair ${area.name} CA`;
+const description = `Honest AC repair, installation, heating, and ductwork in ${area.name}, ${area.county} County. 5.0★ rated, licensed. Call ${config.phoneDisplay}.`;
 ---
 <BaseLayout title={title} description={description} path={`/areas/${area.id}`}>
   <section class="grain relative overflow-hidden border-b border-sandline">

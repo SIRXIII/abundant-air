@@ -13,8 +13,8 @@ export function getStaticPaths() {
 }
 const { service } = Astro.props;
 const others = config.services.filter((s) => s.id !== service.id);
-const title = `${service.name} in ${config.primaryCity} & the ${config.region}`;
-const description = `${service.shortDesc} ${config.businessName}. 5.0★, licensed & insured. Call ${config.phoneDisplay}.`;
+const title = `${service.name} ${config.primaryCity} CA`;
+const description = `${service.shortDesc} 5.0★ rated, licensed & insured. Call ${config.phoneDisplay}.`;
 ---
 <BaseLayout title={title} description={description} path={`/services/${service.id}`}>
   <!-- breadcrumb + hero -->

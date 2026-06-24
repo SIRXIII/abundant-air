@@ -7,12 +7,14 @@ interface Props {
   title: string;
   description?: string;
   path?: string; // e.g. "/services/ductwork"
+  noindex?: boolean;
 }
-const { title, description = config.seo.defaultDescription, path = '' } = Astro.props;
+const { title, description = config.seo.defaultDescription, path = '', noindex = false } = Astro.props;
 
 const fullTitle =
   title === config.seo.siteName ? title : config.seo.titleTemplate.replace('%s', title);
-const canonical = config.seo.canonicalBase + path;
+const raw = config.seo.canonicalBase + path;
+const canonical = raw.endsWith('/') ? raw : raw + '/';
 const ogImage = config.seo.canonicalBase + config.seo.ogImage;
 ---
 <meta charset="utf-8" />
@@ -20,6 +22,7 @@ const ogImage = config.seo.canonicalBase + config.seo.ogImage;
 <title>{fullTitle}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex, follow" />}
 <meta name="theme-color" content="#16302b" />
 <meta name="format-detection" content="telephone=yes" />
 <meta name="generator" content={Astro.generator} />
