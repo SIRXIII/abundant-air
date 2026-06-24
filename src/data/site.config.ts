@@ -335,7 +335,7 @@ export const config: SiteConfig = {
     siteName: 'Abundant Air Conditioning & Heating LLC',
     defaultDescription:
       'Honest AC repair, installation, and expert ductwork in La Quinta and across the Coachella Valley. Family-run, 5.0★ on Google, fair prices. Call (760) 423-3404.',
-    canonicalBase: 'https://abundant-air.pages.dev',
+    canonicalBase: 'https://abundantairac.com',
     locale: 'en_US',
     ogImage: '/og-default.jpg',
   },
