@@ -15,7 +15,7 @@
   --color-cream: #fbf8f2;        /* raised card surface */
   --color-sandline: #e7decf;     /* hairline borders on paper */
   --color-ink: #16302b;          /* deep pine-teal — primary text */
-  --color-ink-soft: #3c5249;     /* secondary text */
+  --color-ink-soft: #2a3d35;     /* secondary text — darkened for mobile contrast */
 
   --color-coral: #d9724e;        /* primary action — heat */
   --color-coral-deep: #c05f3c;   /* hover / pressed */
