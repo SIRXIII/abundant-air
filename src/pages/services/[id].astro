@@ -47,6 +47,7 @@ const description = `${service.shortDesc} 5.0★ rated, licensed & insured. Call
             <li class="flex items-start gap-3 text-ink-soft"><Icon name="check" class="mt-0.5 h-5 w-5 shrink-0 text-sage-deep" />{b}</li>
           ))}
         </ul>
+        {service.id === 'maintenance' && <a href="/maintenance" class="mt-5 inline-block font-semibold text-coral hover:underline">Save with a recurring Maintenance Plan →</a>}
       </div>
       <div class="rounded-3xl border border-sandline bg-cream p-6 shadow-soft sm:p-8">
         <h3 class="text-xl text-ink">Why homeowners pick Abundant Air</h3>

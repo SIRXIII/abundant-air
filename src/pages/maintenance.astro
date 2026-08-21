@@ -1,0 +1,176 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectImage from '../components/ProjectImage.astro';
+import Icon from '../components/Icon.astro';
+import CTABanner from '../components/CTABanner.astro';
+import { config } from '../data/site.config';
+
+const stripeTableId = config.payments?.stripePricingTableId ?? '';
+const stripeKey = config.payments?.stripePublishableKey ?? '';
+const stripeReady = Boolean(stripeTableId && stripeKey);
+const zelle = config.payments?.zelle;
+const showZelle = Boolean(zelle?.handle);
+const portalUrl = config.payments?.customerPortalUrl;
+const oneTimeUrl = config.payments?.oneTimePaymentLinkUrl;
+
+const title = 'Maintenance Plans';
+const description = `Year-round HVAC maintenance plans for ${config.primaryCity} and the ${config.region}. Priority scheduling, 15% off repairs, waived diagnostics. Call ${config.phoneDisplay}.`;
+
+const faqs = [
+  { q: 'Can I cancel anytime?', a: "Yes. There's no contract lock-in — cancel through the customer portal or by calling us, and you won't be billed again." },
+  { q: 'How does the 15% discount work?', a: 'Members get 15% off the price of repairs and replacements performed by Abundant Air, applied automatically to your invoice.' },
+  { q: 'What does priority scheduling mean?', a: "Members are scheduled ahead of new customers, which matters most during the first heat wave when everyone's AC goes down at once." },
+  { q: 'What does the waived diagnostic fee cover?', a: 'The standard trip/diagnostic charge to come out and identify the problem is waived for members on every visit.' },
+  { q: 'How is this different from a one-time tune-up?', a: 'A one-time tune-up is a single visit. A plan bundles multiple seasonal visits per year plus ongoing discounts, priority scheduling, and waived fees.' },
+  { q: 'Can I pay with Zelle instead of a card?', a: 'Yes — Zelle is available for the annual plan only, at a discounted rate. Monthly billing runs through the online card portal.' },
+];
+
+const benefits = [
+  { title: '15% off repairs & replacements', text: 'Applies to parts and labor any time your system needs work, no coupon codes to hunt down.' },
+  { title: 'Priority scheduling', text: "Members jump the queue during peak summer heat instead of waiting behind new customers." },
+  { title: 'Waived diagnostic fee', text: "The trip charge to figure out what's wrong is on us, every visit, for the life of your membership." },
+  { title: 'No overtime charges', text: 'After-hours and weekend calls are billed at the same rate as a weekday visit.' },
+];
+---
+<BaseLayout title={title} description={description} path="/maintenance">
+  <!-- breadcrumb + hero -->
+  <section class="grain relative overflow-hidden border-b border-sandline">
+    <div class="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-coral-tint blur-3xl opacity-60" aria-hidden="true"></div>
+    <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 py-12 sm:px-6 lg:grid-cols-2 lg:py-16">
+      <div>
+        <nav class="text-sm text-ink-soft"><a href="/" class="hover:text-ink">Home</a> <span class="px-1">/</span> <span class="text-ink">Maintenance Plans</span></nav>
+        <span class="mt-5 grid h-12 w-12 place-items-center rounded-2xl bg-coral text-white"><Icon name="gauge" class="h-6 w-6" /></span>
+        <h1 class="mt-4 text-3xl text-ink sm:text-4xl lg:text-5xl">Maintenance Plans for <span class="wave-underline">year-round protection</span></h1>
+        <p class="mt-4 max-w-xl text-lg text-ink-soft">Coachella Valley heat doesn't let up, and neither should your AC. Regular tune-ups from Abundant Air catch small problems before they become expensive breakdowns in July.</p>
+        <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+          <a href={`tel:${config.phone}`} data-call class="inline-flex items-center justify-center gap-2 rounded-full bg-coral px-6 py-3.5 font-semibold text-white shadow-lift hover:bg-coral-deep"><Icon name="phone" class="h-5 w-5" /> Call {config.phoneDisplay}</a>
+          <a href="#plans" class="inline-flex items-center justify-center gap-2 rounded-full border border-ink/15 bg-cream px-6 py-3.5 font-semibold text-ink hover:border-ink/30">See the plans</a>
+        </div>
+      </div>
+      <div class="overflow-hidden rounded-[1.5rem] border border-sandline shadow-lift">
+        <ProjectImage src="tech-condenser-service.jpg" alt={`Abundant Air technician servicing an AC condenser in ${config.primaryCity}, CA`} widths={[480, 800, 1100]} sizes="(max-width:1024px) 100vw, 520px" loading="eager" class="aspect-[4/3] w-full object-cover" />
+      </div>
+    </div>
+  </section>
+
+  <!-- plan comparison -->
+  <section id="plans" class="mx-auto max-w-6xl scroll-mt-24 px-4 py-14 sm:px-6">
+    <div class="max-w-2xl">
+      <p class="text-sm font-semibold uppercase tracking-[0.18em] text-sage-deep">Choose your plan</p>
+      <h2 class="mt-2 text-3xl text-ink sm:text-4xl">Two ways to keep your system protected</h2>
+    </div>
+    <div class="mt-8 grid gap-5 sm:grid-cols-2">
+      {config.maintenancePlans.map((plan) => (
+        <div class="rounded-3xl border border-sandline bg-cream p-6 shadow-soft sm:p-8">
+          <h3 class="text-xl text-ink">{plan.name}</h3>
+          <p class="mt-1 text-sm font-medium text-sage-deep">{plan.cadence}</p>
+          <p class="mt-4"><span class="text-4xl text-ink">${plan.priceMonthly}</span><span class="text-ink-soft">/mo</span></p>
+          <p class="mt-1 text-sm text-ink-soft">billed ${plan.priceAnnual}/year</p>
+          <ul class="mt-5 space-y-2.5">
+            {plan.bullets.map((b) => (
+              <li class="flex items-start gap-2.5 text-sm text-ink-soft"><Icon name="check" class="mt-0.5 h-5 w-5 shrink-0 text-sage-deep" />{b}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+    <p class="mt-5 text-sm text-ink-soft">{config.maintenanceExtraSystemNote} · Cancel anytime</p>
+  </section>
+
+  <!-- Stripe signup / fallback -->
+  <section class="mx-auto max-w-3xl px-4 py-4 sm:px-6">
+    {stripeReady ? (
+      <div class="rounded-3xl border border-sandline bg-cream p-6 shadow-soft sm:p-8">
+        <h3 class="text-xl text-ink">Sign up online</h3>
+        <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
+        <stripe-pricing-table pricing-table-id={stripeTableId} publishable-key={stripeKey}></stripe-pricing-table>
+        <noscript>Call {config.phoneDisplay} to sign up.</noscript>
+      </div>
+    ) : (
+      <div class="rounded-3xl border border-sandline bg-cream p-6 text-center shadow-soft sm:p-8">
+        <h3 class="text-xl text-ink">Online signup launching soon</h3>
+        <p class="mt-2 text-ink-soft">Call or text to enroll today — we'll get you set up over the phone in a couple minutes.</p>
+        <a href={`tel:${config.phone}`} data-call class="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-coral px-6 py-3.5 font-semibold text-white shadow-lift hover:bg-coral-deep"><Icon name="phone" class="h-5 w-5" /> Call {config.phoneDisplay}</a>
+      </div>
+    )}
+  </section>
+
+  <!-- Zelle callout -->
+  {showZelle && (
+    <section class="mx-auto max-w-3xl px-4 py-4 sm:px-6">
+      <div class="rounded-3xl border border-sandline bg-sage-tint p-6 shadow-soft sm:p-8">
+        <h3 class="text-xl text-ink">Prefer to skip the card? Pay yearly with Zelle and save.</h3>
+        <ul class="mt-4 space-y-1.5 text-ink-soft">
+          {config.maintenancePlans.map((plan) => (
+            <li>{plan.name}: <span class="font-semibold text-ink">${plan.zelleAnnual}/year</span></li>
+          ))}
+        </ul>
+        <p class="mt-3 text-ink-soft">Send to {zelle?.handle}{zelle?.note ? ` — ${zelle.note}` : ''}, then call or text so we can confirm and start your plan.</p>
+        <div class="mt-5 flex flex-col gap-3 sm:flex-row">
+          <a href={`tel:${config.phone}`} data-call class="inline-flex items-center justify-center gap-2 rounded-full bg-coral px-6 py-3.5 font-semibold text-white shadow-lift hover:bg-coral-deep"><Icon name="phone" class="h-5 w-5" /> Call {config.phoneDisplay}</a>
+          <a href={`sms:${config.phoneSms}`} class="inline-flex items-center justify-center gap-2 rounded-full border border-ink/15 bg-cream px-6 py-3.5 font-semibold text-ink hover:border-ink/30"><Icon name="sms" class="h-5 w-5" /> Text us</a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- one-time option -->
+  <section class="mx-auto max-w-3xl px-4 py-4 sm:px-6">
+    <div class="flex flex-col items-start gap-3 rounded-3xl border border-sandline bg-cream p-6 shadow-soft sm:flex-row sm:items-center sm:justify-between sm:p-8">
+      <p class="text-ink-soft">Just need a one-time tune-up? <a href="/services/maintenance" class="font-semibold text-coral hover:underline">See our AC tune-up service →</a></p>
+      {oneTimeUrl && <a href={oneTimeUrl} class="inline-flex items-center justify-center gap-2 rounded-full border border-ink/15 bg-paper px-5 py-2.5 font-semibold text-ink hover:border-ink/30">Pay online</a>}
+    </div>
+  </section>
+
+  <!-- benefits -->
+  <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+    <h2 class="text-2xl text-ink sm:text-3xl">What membership actually gets you</h2>
+    <div class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {benefits.map((item) => (
+        <div class="rounded-3xl border border-sandline bg-cream p-6 shadow-soft">
+          <Icon name="check" class="h-6 w-6 text-sage-deep" />
+          <h3 class="mt-3 font-semibold text-ink">{item.title}</h3>
+          <p class="mt-2 text-sm text-ink-soft">{item.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="mx-auto max-w-3xl px-4 py-14 sm:px-6">
+    <h2 class="text-2xl text-ink sm:text-3xl">Maintenance plan FAQ</h2>
+    <div class="mt-6 space-y-3">
+      {faqs.map((item) => (
+        <details class="rounded-2xl border border-sandline bg-cream p-5 shadow-soft">
+          <summary class="cursor-pointer font-semibold text-ink">{item.q}</summary>
+          <p class="mt-2 text-ink-soft">{item.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <!-- PLACEHOLDER terms — Carlos must review/approve before launch -->
+  <section class="mx-auto max-w-2xl px-4 py-10 sm:px-6">
+    <div class="rounded-2xl border border-sandline bg-cream p-6 text-sm text-ink-soft">
+      <h2 class="text-base font-semibold text-ink">Membership terms</h2>
+      <p class="mt-2">A maintenance plan is a service agreement billed as a recurring subscription. It is not an insurance policy or an equipment warranty. The 15% discount applies to repairs and replacements performed by Abundant Air Conditioning &amp; Heating LLC. You can cancel anytime through the customer portal or by calling us.</p>
+    </div>
+  </section>
+
+  <!-- manage membership -->
+  <section class="mx-auto max-w-3xl px-4 py-4 sm:px-6">
+    <div class="flex flex-col items-start gap-3 rounded-3xl border border-sandline bg-cream p-6 shadow-soft sm:flex-row sm:items-center sm:justify-between sm:p-8">
+      <div>
+        <h3 class="text-lg font-semibold text-ink">Already a member?</h3>
+        <p class="mt-1 text-ink-soft">Manage your plan, update payment info, or cancel.</p>
+      </div>
+      {portalUrl ? (
+        <a href={portalUrl} class="inline-flex items-center justify-center gap-2 rounded-full bg-coral px-6 py-3 font-semibold text-white shadow-soft hover:bg-coral-deep">Manage my membership</a>
+      ) : (
+        <a href={`tel:${config.phone}`} data-call class="inline-flex items-center justify-center gap-2 rounded-full bg-coral px-6 py-3 font-semibold text-white shadow-soft hover:bg-coral-deep"><Icon name="phone" class="h-5 w-5" /> Call us to update or cancel</a>
+      )}
+    </div>
+  </section>
+
+  <CTABanner heading="Ready to lock in your maintenance plan?" />
+</BaseLayout>

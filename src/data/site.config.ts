@@ -106,6 +106,28 @@ export interface SiteConfig {
     jobTypes: string[];
   };
 
+  // Stripe + Zelle wiring for /maintenance. All optional/blank until Carlos
+  // confirms pricing and the Stripe account is set up.
+  payments?: {
+    stripePricingTableId: string;
+    stripePublishableKey: string;
+    customerPortalUrl: string;
+    oneTimePaymentLinkUrl?: string;
+    zelle?: { handle: string; note?: string };
+  };
+
+  maintenancePlans: Array<{
+    id: string;
+    name: string;
+    cadence: string;
+    priceMonthly: number;
+    priceAnnual: number;
+    zelleAnnual: number;
+    bullets: string[];
+  }>;
+
+  maintenanceExtraSystemNote: string;
+
   hours?: Array<{ days: string; open: string; close: string }>;
 }
 
@@ -398,9 +420,59 @@ export const config: SiteConfig = {
       'Mini split system',
       'Indoor air quality',
       'Tune-up / maintenance',
+      'Maintenance plan sign-up',
       'Other',
     ],
   },
+
+  // PLACEHOLDER PRICING — Carlos to confirm before launch. Keep plan copy in
+  // sync with the Stripe Dashboard Pricing Table powering the embed on /maintenance.
+  // Replicate for next trade client: change stripe IDs/keys, portal/payment-link
+  // URLs, zelle handle, plan prices/bullets, hero image.
+  payments: {
+    stripePricingTableId: '',
+    stripePublishableKey: '',
+    customerPortalUrl: '',
+    oneTimePaymentLinkUrl: '',
+    zelle: { handle: '', note: '' },
+  },
+
+  maintenancePlans: [
+    {
+      id: 'seasonal',
+      name: 'Seasonal Care',
+      cadence: '2 visits / year',
+      priceMonthly: 21,
+      priceAnnual: 228,
+      zelleAnnual: 215,
+      bullets: [
+        'Spring AC tune-up',
+        'Fall heating check',
+        '15% off repairs & replacements',
+        'Priority scheduling',
+        'Waived diagnostic fee',
+        'No overtime charges',
+      ],
+    },
+    {
+      id: 'quarterly',
+      name: 'Quarterly Priority',
+      cadence: '4 visits / year',
+      priceMonthly: 36,
+      priceAnnual: 396,
+      zelleAnnual: 375,
+      bullets: [
+        'Full tune-up every season',
+        'Filter check/replacement each visit',
+        '15% off repairs & replacements',
+        'Top-of-list priority scheduling',
+        'Waived diagnostic fee',
+        'No overtime charges',
+      ],
+    },
+  ],
+
+  maintenanceExtraSystemNote: '+$12/mo per additional system',
 
   // No hours published on the Google profile. Leave undefined so we never
   // invent business hours in the schema. Emergency availability is review-backed.
