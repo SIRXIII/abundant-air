@@ -14,22 +14,25 @@ const portalUrl = config.payments?.customerPortalUrl;
 const oneTimeUrl = config.payments?.oneTimePaymentLinkUrl;
 
 const title = 'Maintenance Plans';
-const description = `Year-round HVAC maintenance plans for ${config.primaryCity} and the ${config.region}. Priority scheduling, 15% off repairs, waived diagnostics. Call ${config.phoneDisplay}.`;
+const description = `Year-round HVAC maintenance plans for ${config.primaryCity} and the ${config.region}. 15–20% off repairs, waived diagnostics, no overtime charges. Call ${config.phoneDisplay}.`;
 
 const faqs = [
   { q: 'Can I cancel anytime?', a: "Yes. There's no contract lock-in — cancel through the customer portal or by calling us, and you won't be billed again." },
-  { q: 'How does the 15% discount work?', a: 'Members get 15% off the price of repairs and replacements performed by Abundant Air, applied automatically to your invoice.' },
+  { q: 'How do the repair discounts work?', a: 'Seasonal Care members get 15% off repairs, Quarterly Priority members get 20% off, applied automatically to your invoice. When it comes time to replace a whole system, your plan gives you a flat credit instead: $250 on Seasonal Care, $500 on Quarterly Priority.' },
+  { q: 'What does the repair warranty cover?', a: 'Workmanship on repairs we perform. If the same repair fails again, we make it right at no charge — for 1 year on Seasonal Care and 2 years on Quarterly Priority.' },
   { q: 'What does priority scheduling mean?', a: "Members are scheduled ahead of new customers, which matters most during the first heat wave when everyone's AC goes down at once." },
   { q: 'What does the waived diagnostic fee cover?', a: 'The standard trip/diagnostic charge to come out and identify the problem is waived for members on every visit.' },
-  { q: 'How is this different from a one-time tune-up?', a: 'A one-time tune-up is a single visit. A plan bundles multiple seasonal visits per year plus ongoing discounts, priority scheduling, and waived fees.' },
+  { q: 'How is this different from a one-time tune-up?', a: 'A one-time tune-up is a single visit. A plan bundles multiple seasonal visits per year plus ongoing discounts, a repair warranty, priority scheduling, and waived fees.' },
   { q: 'Can I pay with Zelle instead of a card?', a: 'Yes — Zelle is available for the annual plan only, at a discounted rate. Monthly billing runs through the online card portal.' },
 ];
 
 const benefits = [
-  { title: '15% off repairs & replacements', text: 'Applies to parts and labor any time your system needs work, no coupon codes to hunt down.' },
-  { title: 'Priority scheduling', text: "Members jump the queue during peak summer heat instead of waiting behind new customers." },
+  { title: '15–20% off repairs', text: 'Seasonal Care saves 15%, Quarterly Priority saves 20% on parts and labor, no coupon codes to hunt down.' },
+  { title: 'System replacement credit', text: 'A flat $250 (Seasonal) or $500 (Quarterly) credit toward a full system replacement when the day comes.' },
+  { title: 'Warranty on repair work', text: 'Repairs we perform are covered for 1 year on Seasonal Care and 2 years on Quarterly Priority.' },
   { title: 'Waived diagnostic fee', text: "The trip charge to figure out what's wrong is on us, every visit, for the life of your membership." },
   { title: 'No overtime charges', text: 'After-hours and weekend calls are billed at the same rate as a weekday visit.' },
+  { title: 'Priority scheduling', text: "Members jump the queue during peak summer heat instead of waiting behind new customers." },
 ];
 ---
 <BaseLayout title={title} description={description} path="/maintenance">
@@ -125,7 +128,7 @@ const benefits = [
   <!-- benefits -->
   <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
     <h2 class="text-2xl text-ink sm:text-3xl">What membership actually gets you</h2>
-    <div class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {benefits.map((item) => (
         <div class="rounded-3xl border border-sandline bg-cream p-6 shadow-soft">
           <Icon name="check" class="h-6 w-6 text-sage-deep" />
@@ -153,7 +156,7 @@ const benefits = [
   <section class="mx-auto max-w-2xl px-4 py-10 sm:px-6">
     <div class="rounded-2xl border border-sandline bg-cream p-6 text-sm text-ink-soft">
       <h2 class="text-base font-semibold text-ink">Membership terms</h2>
-      <p class="mt-2">A maintenance plan is a service agreement billed as a recurring subscription. It is not an insurance policy or an equipment warranty. The 15% discount applies to repairs and replacements performed by Abundant Air Conditioning &amp; Heating LLC. You can cancel anytime through the customer portal or by calling us.</p>
+      <p class="mt-2">A maintenance plan is a service agreement billed as a recurring subscription. It is not an insurance policy or an equipment warranty. Repair discounts (15% on Seasonal Care, 20% on Quarterly Priority) apply to repairs performed by Abundant Air Conditioning &amp; Heating LLC. Replacement credits ($250 Seasonal, $500 Quarterly) are flat, one-time credits toward a full system replacement performed by Abundant Air. The repair warranty (1 year Seasonal, 2 years Quarterly) covers workmanship on repairs we perform. You can cancel anytime through the customer portal or by calling us.</p>
     </div>
   </section>
 

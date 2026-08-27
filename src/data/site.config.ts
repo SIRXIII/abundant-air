@@ -425,16 +425,16 @@ export const config: SiteConfig = {
     ],
   },
 
-  // PLACEHOLDER PRICING — Carlos to confirm before launch. Keep plan copy in
-  // sync with the Stripe Dashboard Pricing Table powering the embed on /maintenance.
-  // Replicate for next trade client: change stripe IDs/keys, portal/payment-link
-  // URLs, zelle handle, plan prices/bullets, hero image.
+  // PRICING APPROVED by Carlos 2026-08-27 (benchmark PDF sign-off). Keep plan
+  // copy in sync with the Stripe Dashboard Pricing Table powering the embed on
+  // /maintenance. Replicate for next trade client: change stripe IDs/keys,
+  // portal/payment-link URLs, zelle handle, plan prices/bullets, hero image.
   payments: {
     stripePricingTableId: '',
     stripePublishableKey: '',
     customerPortalUrl: '',
     oneTimePaymentLinkUrl: '',
-    zelle: { handle: '', note: '' },
+    zelle: { handle: '(760) 423-3404', note: 'Abundant Air Conditioning & Heating' },
   },
 
   maintenancePlans: [
@@ -442,37 +442,42 @@ export const config: SiteConfig = {
       id: 'seasonal',
       name: 'Seasonal Care',
       cadence: '2 visits / year',
-      priceMonthly: 21,
-      priceAnnual: 228,
-      zelleAnnual: 215,
+      priceMonthly: 18,
+      priceAnnual: 189,
+      zelleAnnual: 175,
       bullets: [
         'Spring AC tune-up',
         'Fall heating check',
-        '15% off repairs & replacements',
-        'Priority scheduling',
+        '15% off repairs',
+        'Flat $250 credit toward a system replacement',
+        '1-year warranty on repair work',
+        'One free 1" filter per system',
         'Waived diagnostic fee',
         'No overtime charges',
+        'Priority scheduling',
       ],
     },
     {
       id: 'quarterly',
       name: 'Quarterly Priority',
       cadence: '4 visits / year',
-      priceMonthly: 36,
-      priceAnnual: 396,
-      zelleAnnual: 375,
+      priceMonthly: 32,
+      priceAnnual: 339,
+      zelleAnnual: 319,
       bullets: [
         'Full tune-up every season',
-        'Filter check/replacement each visit',
-        '15% off repairs & replacements',
-        'Top-of-list priority scheduling',
+        '20% off repairs',
+        'Flat $500 credit toward a system replacement',
+        '2-year warranty on repair work',
+        'Filter checked and replaced each visit',
         'Waived diagnostic fee',
         'No overtime charges',
+        'Top-of-list priority scheduling',
       ],
     },
   ],
 
-  maintenanceExtraSystemNote: '+$12/mo per additional system',
+  maintenanceExtraSystemNote: '+$10/mo per additional system',
 
   // No hours published on the Google profile. Leave undefined so we never
   // invent business hours in the schema. Emergency availability is review-backed.
