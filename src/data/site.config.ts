@@ -430,6 +430,11 @@ export const config: SiteConfig = {
   // /maintenance. Replicate for next trade client: change stripe IDs/keys,
   // portal/payment-link URLs, zelle handle, plan prices/bullets, hero image.
   payments: {
+    // Fill these two from Carlos's Stripe Dashboard once the Developer invite is
+    // accepted: Product catalog > Pricing tables > (table) > Copy code. The embed
+    // snippet contains both values. The publishable key (pk_live_…) is public by
+    // design and safe to commit — NEVER put a secret key (sk_…) in this file.
+    // Filling both flips /maintenance from the "launching soon" card to live checkout.
     stripePricingTableId: '',
     stripePublishableKey: '',
     customerPortalUrl: '',
