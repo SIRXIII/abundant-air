@@ -123,6 +123,9 @@ export interface SiteConfig {
     priceMonthly: number;
     priceAnnual: number;
     zelleAnnual: number;
+    paymentLinkMonthly: string;
+    paymentLinkAnnual: string;
+    featured?: boolean;
     bullets: string[];
   }>;
 
@@ -437,7 +440,7 @@ export const config: SiteConfig = {
     // Filling both flips /maintenance from the "launching soon" card to live checkout.
     stripePricingTableId: '',
     stripePublishableKey: '',
-    customerPortalUrl: '',
+    customerPortalUrl: 'https://billing.stripe.com/p/login/14AbJ36SugzQ53H3au0ZW00',
     oneTimePaymentLinkUrl: '',
     zelle: { handle: '(760) 423-3404', note: 'Abundant Air Conditioning & Heating' },
   },
@@ -450,6 +453,8 @@ export const config: SiteConfig = {
       priceMonthly: 18,
       priceAnnual: 189,
       zelleAnnual: 175,
+      paymentLinkMonthly: 'https://buy.stripe.com/14AbJ36SugzQ53H3au0ZW00',
+      paymentLinkAnnual: 'https://buy.stripe.com/6oUdRb5OqdnE2Vz3au0ZW03',
       bullets: [
         'Spring AC tune-up',
         'Fall heating check',
@@ -469,6 +474,9 @@ export const config: SiteConfig = {
       priceMonthly: 32,
       priceAnnual: 339,
       zelleAnnual: 319,
+      paymentLinkMonthly: 'https://buy.stripe.com/5kQ7sN5Oq2J0fIl7qK0ZW01',
+      paymentLinkAnnual: 'https://buy.stripe.com/5kQbJ32CednE1RveTc0ZW02',
+      featured: true,
       bullets: [
         'Full tune-up every season',
         '20% off repairs',
