@@ -100,8 +100,8 @@ export interface SiteConfig {
   };
 
   form: {
-    provider: 'web3forms';
-    web3formsAccessKey: string;
+    provider: 'cloudflare';
+    endpoint: string;
     toEmail: string;
     jobTypes: string[];
   };
@@ -412,9 +412,11 @@ export const config: SiteConfig = {
   },
 
   form: {
-    provider: 'web3forms',
-    web3formsAccessKey: '1fb1e158-4399-4b2f-a8e3-b016f2c1a076',
-    toEmail: '13.csilva@gmail.com',
+    provider: 'cloudflare',
+    // Handled by the abundant-contact-form Worker (workers/contact-form/).
+    // Recipients are configured in that Worker, not here.
+    endpoint: '/api/contact',
+    toEmail: 'leads@abundantairac.com',
     jobTypes: [
       'Ductwork replacement / sealing',
       'AC not cooling / repair',

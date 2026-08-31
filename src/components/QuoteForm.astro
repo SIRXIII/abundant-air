@@ -1,7 +1,8 @@
 ---
 import { config } from '../data/site.config';
 import Icon from './Icon.astro';
-const configured = !config.form.web3formsAccessKey.startsWith('REPLACE');
+const endpoint = config.form.endpoint;
+const configured = Boolean(endpoint);
 ---
 <section id="quote" class="relative scroll-mt-24 overflow-hidden bg-paper">
   <div class="pointer-events-none absolute -left-32 bottom-0 h-96 w-96 rounded-full bg-sage-tint blur-3xl opacity-60" aria-hidden="true"></div>
@@ -27,9 +28,6 @@ const configured = !config.form.web3formsAccessKey.startsWith('REPLACE');
     </div>
 
     <form id="quote-form" class="rounded-[2rem] border border-sandline bg-cream p-6 shadow-lift sm:p-8" novalidate>
-      <input type="hidden" name="access_key" value={config.form.web3formsAccessKey} />
-      <input type="hidden" name="subject" value={`New quote request for ${config.businessName}`} />
-      <input type="hidden" name="from_name" value={config.businessName} />
       <!-- honeypot -->
       <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
 
@@ -72,7 +70,7 @@ const configured = !config.form.web3formsAccessKey.startsWith('REPLACE');
   </div>
 </section>
 
-<script is:inline define:vars={{ configured }}>
+<script is:inline define:vars={{ configured, endpoint }}>
   const form = document.getElementById('quote-form');
   const status = document.getElementById('quote-status');
   if (form) {
@@ -94,7 +92,7 @@ const configured = !config.form.web3formsAccessKey.startsWith('REPLACE');
       btn.disabled = true;
       btn.textContent = 'Sending…';
       try {
-        const res = await fetch('https://api.web3forms.com/submit', {
+        const res = await fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
           body: JSON.stringify(Object.fromEntries(new FormData(form))),
